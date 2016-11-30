@@ -25,20 +25,20 @@ a .csv format to easily be used by Microsoft Excel.
 
 
 def print_primary_options():
-    print("""\n[-] Options:
-    \nAuto Correlate [1]
-    \nManually Correlate [2]
-    \nHelp [3]
-    \nQuit [4] :
+    print("""\n[-] Options:\n
+    [1] Auto Correlate
+    [2] Manually Correlate
+    [3] Help
+    [4] Quit
     """)
 
 
 def print_secondary_options():
-    print("""\n[-] Options:
-    \nFind OH16 & OH20 correlations [1]
-    \nFind OH16, OH20 and O2 correlations [2]
-    \nHelp [3]
-    \nQuit [4] :
+    print("""\n[-] Options:\n
+    [1] Find OH16 & OH20 correlations
+    [2] Find OH16, OH20 and O2 correlations
+    [3] Help
+    [4] - Quit
     """)
 
 # Print iterations progress
@@ -68,8 +68,10 @@ def initialize():
         print("Exists")
     else:
         settings = {
-            'completed': 'false',
-            'pathToFile': '',
+            'setup': 'false',
+            'savePath': '',
+            'loadPath': '',
+            'dataPath': ''
         }
         s = json.dumps(settings)
         with open('settings.json', 'w') as f:
