@@ -10,10 +10,12 @@ opt = saber.smart_input("> ")
 
 while opt != "99":
     if opt == "1":
-        print "1"
+        saber.print_secondary_options()
+        opt = saber.smart_input("> ")
 
     elif opt == "2":
-        print "2"
+        saber.print_secondary_options()
+        opt = saber.smart_input("> ")
 
     elif opt == "3":
         print "3"

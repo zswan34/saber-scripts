@@ -28,7 +28,7 @@ a .csv format to easily be used by Microsoft Excel.
 
 
 def print_primary_options():
-    print("""\n[-] Options:\n
+    print("""\n[*] Options:\n
     [1] Auto Correlate
     [2] Manually Correlate
     [3] Help
@@ -37,7 +37,7 @@ def print_primary_options():
 
 
 def print_secondary_options():
-    print("""\n[-] Options:\n
+    print("""\n[*] Options:\n
     [1] Find OH16 & OH20 correlations
     [2] Find OH16, OH20 and O2 correlations
     [3] Help
@@ -45,8 +45,8 @@ def print_secondary_options():
     """)
 
 
-def print_timeframe_options():
-    print("""\n[-] Options:\n
+def print_sort_options():
+    print("""\n[*] Options:\n
     [1] Sort all
     [2] Sort by years
     [3] Sort by months
@@ -55,8 +55,11 @@ def print_timeframe_options():
     [99] - Quit
     """)
 
-
+#
 # Print iterations progress
+#
+
+
 def print_progress(iteration, total, prefix='', suffix='', decimals=1, barLength=100):
     """
     Call in a loop to create terminal progress bar
@@ -100,8 +103,12 @@ def is_windows():
     if sys.platform == "win32":
         return True
 
+#
+# Because Windows will be Windows...
+#
 
-def smart_input(message):  # Because Windows will be Windows...
+
+def smart_input(message):
     if is_windows():
         return input(message)
     else:
@@ -118,7 +125,11 @@ def file_exists(filename):
         return True
 
 
-def truncate_contents(filename):  # Truncate file contents
+#
+#  Strip file contents
+#
+
+def strip_contents(filename):
     contents = []
     f = open(filename)
     csv_f = csv.reader(f)
@@ -131,54 +142,35 @@ def truncate_contents(filename):  # Truncate file contents
     return contents
 
 
-def find_oh1620(channel_01, channel_02):  # Find OH 1.6 and OH 2.0 correlation
-    oh1620 = []
+def find_duplicates(obj01, obj02, start_message, finish_message):
+    duplicates = []
     count = 0
     i = 0
-    t = len(channel_01)
-    print("[*] Finding OH16 and OH20 correlations...")
+    t = len(obj01)
+    print("[*] " + start_message)
     if ShowProgress:
         print_progress(i, t, prefix='Progress', suffix="Complete", barLength=50)
-    for OH16_rows in channel_01:
-        for OH20_rows in channel_02:
+    for OH16_rows in obj01:
+        for OH20_rows in obj02:
             if OH16_rows == OH20_rows:
-                oh1620.append(OH16_rows)
+                duplicates.append(OH16_rows)
                 count += 1
         if ShowProgress:
             i += 1
             print_progress(i, t, prefix='Progress', suffix="Complete", barLength=50)
-    print(str(count) + " OH16 and OH20 correlations found.")
+    print("[*] Number of correlations: " + str(count))
+    print("[*] " + finish_message)
     sleep(1)
     print("[*] Processing data completed!")
     sleep(1)
-    return oh1620
+    return duplicates
+
+#
+# Convert data to CSV formatted
+#
 
 
-def find_OHO2(OH, O2):  # Find OH O2 Correlations
-    oh1620O2 = []
-    count = 0
-    i = 0
-    t = len(OH)
-    print("[*] Finding OH16, OH20 and O2 correlations...")
-    if ShowProgress:
-        print_progress(i, t, prefix='Progress', suffix="Complete", barLength=50)
-    for OH_rows in OH:
-        for O2_rows in O2:
-            if OH_rows == O2_rows:
-                oh1620O2.append(OH_rows)
-                count += 1
-        if ShowProgress:
-            i += 1
-            print_progress(i, t, prefix='Progress', suffix="Complete", barLength=50)
-    print(str(count) + " OH16, OH20 and O2 correlations found.")
-    sleep(1)
-
-    print("[*] Processing data completed!")
-    sleep(1)
-    return oh1620O2
-
-
-def format_list(text_list):  # Convert data to CSV formatted
+def format_list(text_list):
     print("[*] Converting list to CSV format...")
     formatted = []
     i = 0
@@ -198,14 +190,18 @@ def format_list(text_list):  # Convert data to CSV formatted
     print("[*] Formatted...")
     return formatted
 
+#
+# Save file
+#
 
-def save_to_file(name, text):  # Save file
+
+def save_to_file(name, text):
     print("[*] Saving " + name + " file...")
     file_write = open(name, "w+")
     for rows in text:
         file_write.write(rows + "\n")
     file_write.close()
-    print("File saved successfully: " + name)
+    print("[*] File saved successfully: " + name)
 
 
 # Script begins
