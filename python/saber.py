@@ -24,8 +24,21 @@ a .csv format to easily be used by Microsoft Excel.
 [*******************************************************************************************************]""")
 
 
-def print_options():
-    print("""\n[-] Options: \nFind OH16 & OH20 correlations [1] - Find OH16, OH20 and O2 correlations [2] - Help [3] - Quit [4] :
+def print_primary_options():
+    print("""\n[-] Options:
+    \nAuto Correlate [1]
+    \nManually Correlate [2]
+    \nHelp [3]
+    \nQuit [4] :
+    """)
+
+
+def print_secondary_options():
+    print("""\n[-] Options:
+    \nFind OH16 & OH20 correlations [1]
+    \nFind OH16, OH20 and O2 correlations [2]
+    \nHelp [3]
+    \nQuit [4] :
     """)
 
 # Print iterations progress

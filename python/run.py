@@ -5,7 +5,7 @@ saber.initialize()
 saber.print_welcome()
 
 # options
-saber.print_options()
+saber.print_primary_options()
 opt = saber.smart_input("> ")
 
 while opt != "4":
