@@ -13,14 +13,17 @@ ConvertTime = False
 def print_welcome():
     print("""
 [*******************************************************************************************************]
+
                         -----FINDING DUPLICATE OH16/OH20/O2 EVENTS----
+
 This script will find duplicate OH16, OH20 and O2 events by iterating through two files from
 F:/Data/Source_Altitude/DoubleHumps/ directory. It accepts the .txt file that is created by using the
 "findDoubleHumpOH.mat" files in Matlab. Files should be of the same year and different channels i.e
-"DoubleHumpsOH16_2010.txt", "DoubleHumpsOH20_2010.mat" and "DoublehumpsO2_2010.txt". The script will then
+"DoubleHumpsOH16_2010.txt", "DoubleHumpsOH20_2010.txt" and "DoublehumpsO2_2010.txt". The script will then
 compare the two and returnthe correlated events. You will be asked to input the path and file names to both
 input files as well as a name to have the new file be saved as. It is recommended that the file is saved in
 a .csv format to easily be used by Microsoft Excel.
+
 [*******************************************************************************************************]""")
 
 
@@ -29,7 +32,7 @@ def print_primary_options():
     [1] Auto Correlate
     [2] Manually Correlate
     [3] Help
-    [4] Quit
+    [99] Quit
     """)
 
 
@@ -38,8 +41,20 @@ def print_secondary_options():
     [1] Find OH16 & OH20 correlations
     [2] Find OH16, OH20 and O2 correlations
     [3] Help
-    [4] - Quit
+    [99] - Quit
     """)
+
+
+def print_timeframe_options():
+    print("""\n[-] Options:\n
+    [1] Sort all
+    [2] Sort by years
+    [3] Sort by months
+    [4] Sort by seasons
+    [5] Help
+    [99] - Quit
+    """)
+
 
 # Print iterations progress
 def print_progress(iteration, total, prefix='', suffix='', decimals=1, barLength=100):
@@ -78,11 +93,11 @@ def initialize():
             f.write(s)
             f.close()
 
-    print("Initialize")
+    print("[*] Initialized")
 
 
 def is_windows():
-    if os.name == "Windows":
+    if sys.platform == "win32":
         return True
 
 
@@ -121,7 +136,7 @@ def find_oh1620(channel_01, channel_02):  # Find OH 1.6 and OH 2.0 correlation
     count = 0
     i = 0
     t = len(channel_01)
-    print("Finding OH16 and OH20 correlations...")
+    print("[*] Finding OH16 and OH20 correlations...")
     if ShowProgress:
         print_progress(i, t, prefix='Progress', suffix="Complete", barLength=50)
     for OH16_rows in channel_01:
@@ -134,7 +149,7 @@ def find_oh1620(channel_01, channel_02):  # Find OH 1.6 and OH 2.0 correlation
             print_progress(i, t, prefix='Progress', suffix="Complete", barLength=50)
     print(str(count) + " OH16 and OH20 correlations found.")
     sleep(1)
-    print("Processing data completed!")
+    print("[*] Processing data completed!")
     sleep(1)
     return oh1620
 
@@ -144,7 +159,7 @@ def find_OHO2(OH, O2):  # Find OH O2 Correlations
     count = 0
     i = 0
     t = len(OH)
-    print("Finding OH16, OH20 and O2 correlations...")
+    print("[*] Finding OH16, OH20 and O2 correlations...")
     if ShowProgress:
         print_progress(i, t, prefix='Progress', suffix="Complete", barLength=50)
     for OH_rows in OH:
@@ -158,13 +173,13 @@ def find_OHO2(OH, O2):  # Find OH O2 Correlations
     print(str(count) + " OH16, OH20 and O2 correlations found.")
     sleep(1)
 
-    print("Processing data completed!")
+    print("[*] Processing data completed!")
     sleep(1)
     return oh1620O2
 
 
 def format_list(text_list):  # Convert data to CSV formatted
-    print("Converting list to CSV format...")
+    print("[*] Converting list to CSV format...")
     formatted = []
     i = 0
     t = len(text_list)
@@ -180,14 +195,14 @@ def format_list(text_list):  # Convert data to CSV formatted
         if ShowProgress:
             i += 1
             print_progress(i, t, prefix='Progress', suffix="Complete", barLength=50)
-    print("Formatted...")
+    print("[*] Formatted...")
     return formatted
 
 
-def save_list_to_file(name, text_list):  # Save file
-    print("Saving " + name + " file...")
+def save_to_file(name, text):  # Save file
+    print("[*] Saving " + name + " file...")
     file_write = open(name, "w+")
-    for rows in text_list:
+    for rows in text:
         file_write.write(rows + "\n")
     file_write.close()
     print("File saved successfully: " + name)

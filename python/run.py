@@ -8,7 +8,7 @@ saber.print_welcome()
 saber.print_primary_options()
 opt = saber.smart_input("> ")
 
-while opt != "4":
+while opt != "99":
     if opt == "1":
         print "1"
 
@@ -18,7 +18,7 @@ while opt != "4":
     elif opt == "3":
         print "3"
 
-    elif opt == "4":
+    elif opt == "99":
         print "4"
 
     else:
