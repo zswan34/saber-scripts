@@ -25,5 +25,5 @@ while opt != "99":
 
     else:
         print "I don't understand...\n"
-        saber.print_options()
+        saber.print_primary_options()
         opt = saber.smart_input("> ")
