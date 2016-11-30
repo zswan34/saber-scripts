@@ -46,7 +46,7 @@ def print_progress(iteration, total, prefix='', suffix='', decimals=1, barLength
 
 
 def is_windows():
-    if os.name == "Windows":
+    if sys.platform == "wind32":
         return True
 
 
