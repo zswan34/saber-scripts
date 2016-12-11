@@ -41,7 +41,7 @@ def print_secondary_options():
     [1] Find OH16 & OH20 correlations
     [2] Find OH16, OH20 and O2 correlations
     [3] Help
-    [99] - Quit
+    [99] Quit
     """)
 
 
@@ -52,7 +52,7 @@ def print_sort_options():
     [3] Sort by months
     [4] Sort by seasons
     [5] Help
-    [99] - Quit
+    [99] Quit
     """)
 
 #
@@ -142,7 +142,7 @@ def strip_contents(filename):
     return contents
 
 
-def find_duplicates(obj01, obj02, start_message, finish_message):
+def find_duplicates(obj01, obj02, start_message):
     duplicates = []
     count = 0
     i = 0
@@ -159,7 +159,6 @@ def find_duplicates(obj01, obj02, start_message, finish_message):
             i += 1
             print_progress(i, t, prefix='Progress', suffix="Complete", barLength=50)
     print("[*] Number of correlations: " + str(count))
-    print("[*] " + finish_message)
     sleep(1)
     print("[*] Processing data completed!")
     sleep(1)
@@ -203,6 +202,36 @@ def save_to_file(name, text):
     file_write.close()
     print("[*] File saved successfully: " + name)
 
+
+def get_and_check_file():
+    name = smart_input("Enter the file path for a file: ")
+    while not file_exists(name):
+        name = smart_input("[!] Could not find file. Enter the file path for a file: ")
+    return name
+
+
+def save_file_as():
+    save_name = smart_input("[*] Enter the name the file will be saved as (\"It will be saved as .csv\"): ")
+    return save_name
+
+
+def cwd():
+    os.getcwd()
+
+
+def manage_data_directory(type):
+    if type == "1620":
+        if not filepath_exists("Correlations/OH16_20/CSV/"):
+            os.makedirs("Correlations/OH16_20/CSV/")
+        if not filepath_exists("Correlations/OH16_20/TXT/"):
+            os.makedirs("Correlations/OH16_20/TXT/")
+    elif type == "O2":
+        if not filepath_exists("Correlations/OH16_20_O2/CSV/"):
+            os.makedirs("Correlations/OH16_20_O2/CSV/")
+        if not filepath_exists("Correlations/OH16_20/TXT/"):
+            os.makedirs("Correlations/OH16_20_O2/TXT/")
+    else:
+        print "[!] Something went wrong.."
 
 # Script begins
 #welcome_message()
